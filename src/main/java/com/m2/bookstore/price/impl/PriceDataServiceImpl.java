@@ -6,6 +6,12 @@ import com.m2.bookstore.price.dto.StockPriceData;
 
 import java.util.Map;
 
+/**
+ * @author Mohammed Abdu
+ * @version vr0.1
+ * @createdOn Aug, 2023
+ */
+
 public class PriceDataServiceImpl implements PriceDataService {
 
     private static final StockPriceData APPLE_PRICE_DATA =

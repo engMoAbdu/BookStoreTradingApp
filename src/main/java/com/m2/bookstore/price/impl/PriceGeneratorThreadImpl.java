@@ -12,6 +12,12 @@ import java.util.Map;
 import java.util.Random;
 import java.util.logging.Level;
 
+/**
+ * @author Mohammed Abdu
+ * @version vr0.1
+ * @createdOn Aug, 2023
+ */
+
 public class PriceGeneratorThreadImpl extends Thread implements PriceGenerator, CustomLogger {
 
     private final PriceDataService priceDataService;
