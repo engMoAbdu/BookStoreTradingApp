@@ -2,6 +2,7 @@ package com.m2.bookstore.utils.dialog;
 
 import javax.swing.*;
 
+import static com.m2.bookstore.common.constants.Constants.Characters.STAR;
 import static com.m2.bookstore.common.constants.Constants.UTILITY_CLASS;
 
 /**
@@ -18,6 +19,44 @@ public final class SystemDialogUtils {
                 message,  // Message to display
                 "Error",  // Dialog title
                 JOptionPane.ERROR_MESSAGE  // Message type (ERROR_MESSAGE for error)
+        );
+    }
+
+    public static String headerMandatoryInputDialogMessage(String title, String options) {
+        return String.format(
+                """
+                        %s %s
+                        ************************************
+                        Kindly use from down options:
+                        
+                        %s
+                        ************************************
+                        """, STAR, title, options
+        );
+    }
+
+    public static String headerMandatoryWithOptionalInputDialogMessage(String title, String options) {
+        return String.format(
+                """
+                        %s
+                        %s
+                        """, title, options
+        );
+    }
+
+    public static String headerMandatoryWithoutOptionalInputDialogMessage(String title) {
+        return String.format(
+                """
+                        %s %s
+                        """, STAR, title
+        );
+    }
+
+    public static String headerTitleOnlyAndOptionalInputDialogMessage(String title) {
+        return String.format(
+                """
+                        %s
+                        """, title
         );
     }
 

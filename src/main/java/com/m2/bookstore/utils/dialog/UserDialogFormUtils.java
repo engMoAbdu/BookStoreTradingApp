@@ -1,5 +1,6 @@
 package com.m2.bookstore.utils.dialog;
 
+import com.m2.bookstore.common.exception.CustomNotFoundException;
 import com.m2.bookstore.common.logger.CustomLogger;
 import com.m2.bookstore.dto.OrderCreationRequest;
 import com.m2.bookstore.service.OrderBookService;
@@ -9,6 +10,7 @@ import com.m2.bookstore.service.UserService;
 import com.m2.bookstore.utils.order.OrderBookPrinterUtils;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Mohammed Abdu
@@ -27,13 +29,12 @@ public final class UserDialogFormUtils implements CustomLogger {
                 String password = MainDialogUtils.showPasswordInput();
                 boolean isLogin = userService.login(username, password);
                 loginedUser = validateLoginUser(isLogin, userService, username);
-                break;
-            case MainDialogUtils.OPTION_REGISTER:
-                boolean registrationSuccess = UserDialogRegistrationUtils.registerUser(userService);
-                if (!registrationSuccess) {
-                    log.info("User canceled the registration.");
+                if (Objects.isNull(loginedUser)) {
+                    throw new CustomNotFoundException("Username or password incorrect, Kindly enter valid credentials!");
                 }
                 break;
+            case MainDialogUtils.OPTION_REGISTER:
+                return UserDialogRegistrationUtils.registerUser(userService);
             case MainDialogUtils.OPTION_CANCEL:
                 log.info("User canceled the operation.");
                 System.exit(0);
@@ -79,7 +80,7 @@ public final class UserDialogFormUtils implements CustomLogger {
     }
 
 
-    private static User validateLoginUser(boolean isLogin, UserService userService, String username) {
+    public static User validateLoginUser(boolean isLogin, UserService userService, String username) {
         if (isLogin) {
             log.info("Login Status: " + isLogin);
             return userService.findUserByUsername(username);

@@ -1,5 +1,6 @@
 package com.m2.bookstore;
 
+import com.m2.bookstore.common.config.PropertiesReader;
 import com.m2.bookstore.common.enums.ErrorCodes;
 import com.m2.bookstore.common.exception.CustomServiceException;
 import com.m2.bookstore.common.logger.CustomLogger;
@@ -24,12 +25,13 @@ import java.util.Objects;
  * Author: Mohammed Abdu
  * Version: vr0.1
  * Email: eng.mo.abdu@gmail.com
- * Creation Date: 25 Nov 2023
+ * Creation Date: 25 Nov 2023.
  */
 public class BookStoreApplication implements CustomLogger {
 
     public static void main(String[] args) {
         try {
+            PropertiesReader.retrieveUserFileNamesEnv(args);
             OrderBookService orderBookService = initializeTradingSystem();
             runApplication(orderBookService);
         } catch (Exception e) {
@@ -61,7 +63,7 @@ public class BookStoreApplication implements CustomLogger {
     static void runApplication(OrderBookService orderBookService) {
         UserService userService = new UserServiceImpl();
         boolean isUserLogin = false;
-        int maxAttempts = 3;  // Set a maximum number of attempts to avoid infinite loop
+        int maxAttempts = 3;  // Set a maximum amount attempts to avoid infinite loop
 
         while (maxAttempts > 0) {
             try {
@@ -81,7 +83,7 @@ public class BookStoreApplication implements CustomLogger {
                 }
             } catch (Exception e) {
                 log.error(e.getMessage());
-                SystemDialogUtils.showErrorDialog("An unexpected error occurred. Please check the logs for details.");
+                SystemDialogUtils.showErrorDialog(e.getMessage());
             }
         }
     }
@@ -100,7 +102,7 @@ public class BookStoreApplication implements CustomLogger {
                 }
             } catch (Exception e) {
                 log.error(e.getMessage());
-                SystemDialogUtils.showErrorDialog("An unexpected error occurred. Please check the logs for details.");
+                SystemDialogUtils.showErrorDialog(e.getMessage());
             }
         }
     }

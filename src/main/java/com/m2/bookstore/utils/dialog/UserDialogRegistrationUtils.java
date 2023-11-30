@@ -1,7 +1,9 @@
 package com.m2.bookstore.utils.dialog;
 
+import com.m2.bookstore.common.exception.CustomNotFoundException;
 import com.m2.bookstore.common.logger.CustomLogger;
 import com.m2.bookstore.dto.UserCreationRequest;
+import com.m2.bookstore.model.User;
 import com.m2.bookstore.service.UserService;
 
 import static com.m2.bookstore.common.constants.Constants.UTILITY_CLASS;
@@ -14,10 +16,12 @@ import static com.m2.bookstore.common.constants.Constants.UTILITY_CLASS;
  */
 public final class UserDialogRegistrationUtils implements CustomLogger {
 
-    public static boolean registerUser(UserService userService) {
+    public static User registerUser(UserService userService) {
         boolean registrationSuccess = false;
+        User loginUser = null;
         while (!registrationSuccess) {
             UserCreationRequest userCreationRequest = UserCreationRequest.createFromUserInput(null);
+            assert userCreationRequest != null;
             if (userService.checkExistUsername(userCreationRequest.username())) {
                 int option = MainDialogUtils.showMainDialog(false);
                 switch (option) {
@@ -32,7 +36,6 @@ public final class UserDialogRegistrationUtils implements CustomLogger {
                         // Continue the loop for registration
                         break;
                     case MainDialogUtils.OPTION_CANCEL:
-                        log.info("User canceled the registration.");
                         // No need to exit the loop here
                         break;
                     default:
@@ -42,10 +45,16 @@ public final class UserDialogRegistrationUtils implements CustomLogger {
                 // Username does not exist, proceed with registration
                 String newUserCreationResponse = userService.createNewUser(userCreationRequest);
                 log.info(newUserCreationResponse);
-                registrationSuccess = true; // Exit the loop after successful registration
+                registrationSuccess = userService.login(userCreationRequest.username(), userCreationRequest.password());
+                if (registrationSuccess) {
+                    loginUser = UserDialogFormUtils.validateLoginUser(true, userService, userCreationRequest.username());
+                } else {
+                    log.info("User canceled the registration.");
+                    throw new CustomNotFoundException("User canceled the registration.");
+                }
             }
         }
-        return registrationSuccess;
+        return loginUser;
     }
 
     private UserDialogRegistrationUtils() {

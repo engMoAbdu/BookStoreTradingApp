@@ -23,7 +23,8 @@ import static com.m2.bookstore.common.constants.Constants.Messages.SuccessMessag
 public class UserServiceImpl extends BaseDataReoServiceImpl<Integer, User> implements UserService, CustomLogger {
     @Override
     protected String setFilename() {
-        return USER_FILE_NAME;
+        String filePathConfig = System.getProperty("file.path.config");
+        return Objects.nonNull(filePathConfig) ? filePathConfig : USER_FILE_NAME;
     }
 
     @Override
@@ -31,7 +32,7 @@ public class UserServiceImpl extends BaseDataReoServiceImpl<Integer, User> imple
         int lastAddedId = this.findAll().stream().mapToInt(User::getId).max().orElse(0);
         Validator.validate(request);
         if (this.checkExistUsername(request.username())) {
-            log.error("This User is already Exist, Please try to Login");
+            log.error("This User is already Exist, Please a try to Login");
             throw new KeyAlreadyExistsException("This User is already Exist.");
         }
         super.save(new User.UserBuilder()

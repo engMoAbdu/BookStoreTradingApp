@@ -1,5 +1,7 @@
 package com.m2.bookstore.common.constants;
 
+import java.io.File;
+
 /**
  * @author Mohammed Abdu
  * @version vr0.1
@@ -15,9 +17,16 @@ public final class Constants {
 
         public static final String BASE_FILE_NAME = "data";
         public static final String FILE_EXTENSION = ".txt";
-        public static final String USER_FILE_NAME = BASE_FILE_NAME + "/users" + FILE_EXTENSION;
+        public static final String USER_FILE_NAME = BASE_FILE_NAME + File.separator + "users" + FILE_EXTENSION;
 
         private M2Files() {
+            throw new IllegalStateException(UTILITY_CLASS);
+        }
+    }
+
+    public static class ColoredText {
+
+        private ColoredText() {
             throw new IllegalStateException(UTILITY_CLASS);
         }
     }

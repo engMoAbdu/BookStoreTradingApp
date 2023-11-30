@@ -44,7 +44,13 @@ The BookStore Trade Application is a Java-based command-line application for man
 4. Run the application:
 
     ```bash
-    java -jar target/BookStoreTradingApp-jar-with-dependencies.jar
+    java -jar target/BookStoreTradingApp-jar-with-dependencies.jar [USERS_FILE_NAME]
+    ```
+
+   Replace `[USERS_FILE_NAME]` with the desired filename for saving user information. For example:
+
+    ```bash
+    java -jar target/BookStoreTradingApp-jar-with-dependencies.jar users.txt
     ```
 
 ## Usage
@@ -100,3 +106,5 @@ If you have any questions, concerns, or suggestions, feel free to reach out to u
 - Email: `eng.mo.abdu@gmail.com`
 - Phone: `+971 (50) 141-4755`
 - GitHub Repository: [BookStoreTradeApp](https://github.com/engMoAbdu/BookStoreTradingApp)
+
+> Note: We have used a custom logger to follow Sonar tools to apply clean code restrictions.
