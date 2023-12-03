@@ -26,7 +26,7 @@ The BookStore Trade Application is a Java-based command-line application for man
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/your-username/BookStoreTradeApp.git
+    git clone https://github.com/engmoabdu/BookStoreTradeApp.git
     ```
 
 2. Navigate to the project directory:
